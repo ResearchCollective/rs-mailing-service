@@ -1,5 +1,4 @@
 const express = require('express')
-const router = express.Router()
 
 // initialing app//
 const app = express()
