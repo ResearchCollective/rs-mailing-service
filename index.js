@@ -2,6 +2,7 @@ const express = require('express')
 const sendpulse = require('sendpulse-api')
 const nodemailer = require('nodemailer')
 const bodyParser = require('body-parser')
+const PORT = process.env.PORT || 8080
 require('dotenv').config()
 
 // initialing app//
@@ -52,6 +53,6 @@ app.post('/', async (req, res) => {
 })
 
 //setting up the port//
-app.listen(8000, () => {
+app.listen(PORT, () => {
     console.log('Mailing microservice is now active')
 })

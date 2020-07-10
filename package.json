@@ -4,7 +4,8 @@
   "description": "A micro-serivce that handle SMTPs for researchcollective.io",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "Pradhumna Pancholi",
   "license": "ISC",
@@ -13,6 +14,6 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "nodemailer": "^6.4.10",
-    "sendpulse-api": "^1.1.4"
+    "nodemon": "^2.0.4"
   }
 }
