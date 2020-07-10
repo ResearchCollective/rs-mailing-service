@@ -1,5 +1,4 @@
 const express = require('express')
-const sendpulse = require('sendpulse-api')
 const nodemailer = require('nodemailer')
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 8080
@@ -20,6 +19,16 @@ app.get('/', (req, res, next) => {
 
 app.post('/', async (req, res) => {
     const {fullName, email, message} = req.body
+    // email template for now - will be moving to 'templates' later
+    const emailContent = `
+      <p>${message}<p>
+
+      <p>
+        <p>From: <p>
+        <p>${fullName}</p>
+        <p>${email}</p>
+      </p>
+    `
 
     // Note to self:- Do not push code with SMTP config, put them in enviroment variable//
     let transporter = nodemailer.createTransport({
@@ -41,8 +50,8 @@ app.post('/', async (req, res) => {
         to: process.env.TO_EMAIL, // can put multiple accounts//
         subject: 'Research Colletive Contact Request',
         // TODO: setting up some email template (maybe)
-        text: message, //plain text body//
-        html: message//object from user's message
+        text: emailContent, //plain text body//
+        html: emailContent//object from user's message
     })
     // Message sent//
     console.log("Message sent: %s", mail.messageId);
