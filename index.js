@@ -1,11 +1,18 @@
 const express = require('express')
 const nodemailer = require('nodemailer')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const PORT = process.env.PORT || 8080
 require('dotenv').config()
 
 // initialing app//
 const app = express()
+// setting up for cors//
+const corsOptions = {
+  // version with option is not deployed yet due to testing//
+   // with this option passed, only request from this domain can invoke the function//
+  origin: 'https://www.researchcollective.io/'
+}
 
 // parse various data//
 app.use(bodyParser.urlencoded({extended: true}))
@@ -17,7 +24,7 @@ app.get('/', (req, res, next) => {
     next()
 })
 
-app.post('/', async (req, res) => {
+app.post('/', cors(corsOptions), async (req, res) => {
     const {fullName, email, message} = req.body
     // email template for now - will be moving to 'templates' later
     const emailContent = `
@@ -46,7 +53,7 @@ app.post('/', async (req, res) => {
     })
     // send mail with transporter//
     let mail = await transporter.sendMail({
-        from: `"Research Collective Contact" <${process.env.TRANSPORTER_EMAIL}>`, 
+        from: `"Research Collective Contact" <${process.env.TRANSPORTER_EMAIL}>`,
         to: process.env.TO_EMAIL, // can put multiple accounts//
         subject: 'Research Colletive Contact Request',
         // TODO: setting up some email template (maybe)
