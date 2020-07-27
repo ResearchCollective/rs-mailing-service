@@ -16,7 +16,7 @@ const controllers = {
         const {fullName, email, message} = req.body
         // email template for now - will be moving to 'templates' later
         const emailContent = `
-          <p>${req.body.message}<p>
+          <p>${message}<p>
           <p>
             <p>From: <p>
             <p>${fullName}</p>
@@ -25,7 +25,7 @@ const controllers = {
         `
     
         // Note to self:- Do not push code with SMTP config, put them in enviroment variable//
-        let transporter = await nodemailer.createTransport({
+        const transporter = await nodemailer.createTransport({
             host: 'smtp-pulse.com',//transporter host name
             port: 465,//transporter port
             secure: true, //true for port 465, false for other ports
@@ -45,7 +45,7 @@ const controllers = {
             subject: 'Research Colletive Contact Request',
             // TODO: setting up some email template (maybe)
             text: message, //plain text body//
-            html: `${message}`//object from user's message
+            html: emailContent//object from user's message
         })
         // Message sent//
         console.log("Message sent: %s", mail.messageId, mail);
